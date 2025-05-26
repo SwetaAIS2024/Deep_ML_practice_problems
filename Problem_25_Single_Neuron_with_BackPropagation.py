@@ -25,10 +25,10 @@ def mse_custom(y_actual, y_pred):
 
 def single_neuron_model(features, labels, weights, bias):
 	# Your code here
-    y_actual = np.array(labels)
+    #y_actual = np.array(labels)
     y_hat = wtd_sum(features, weights, bias) # this is an array 
     y_pred = act_sigmoid(y_hat)
-    mse_val = mse_custom(y_actual, y_pred)
+    mse_val = mse_custom(labels, y_pred)
     
     prob_rounded = np.round(y_pred, 4)
     mse_rounded = np.round(mse_val, 4)
@@ -58,8 +58,8 @@ def train_neuron(features, labels, initial_weights, initial_bias, learning_rate,
     for epoch in range(epochs):
         # Forward pass 
         print(f"Epoch {epoch+1}/{epochs}")
-        print("Current Weights:", temp_weights)
-        print("Current Bias:", temp_bias)
+        print("Current Weights:", np.round(temp_weights, 4))
+        print("Current Bias:", np.round(temp_bias, 4))
         print("Current Learning Rate:", learning_rate)
         y_pred, mse_values = single_neuron_model(features, labels, temp_weights, temp_bias)
         mse_list.append(mse_values)
@@ -75,8 +75,8 @@ def train_neuron(features, labels, initial_weights, initial_bias, learning_rate,
     updated_weights = np.round(temp_weights, 4)
     updated_bias = np.round(temp_bias, 4)
     # Updated weights and bias after training
-    print("Updated Weights:", temp_weights)
-    print("Updated Bias:", temp_bias)
+    print("Updated Weights:", updated_weights)
+    print("Updated Bias:", updated_bias)
     print("Final MSE Values:", mse_list)
     return updated_weights, updated_bias, mse_list
 
