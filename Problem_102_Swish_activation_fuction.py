@@ -18,6 +18,6 @@ def swish(x: float) -> float:
 		The Swish activation value
 	"""
 	# Your code here
-    result_swish = x * sigmoid(x)
-    result_swish =  round(result_swish, 4)
+	result_swish = x * sigmoid(x)
+	result_swish =  round(result_swish, 4)
 	return result_swish
