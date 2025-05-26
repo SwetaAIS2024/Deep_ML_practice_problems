@@ -8,32 +8,35 @@
 import math
 import numpy as np
 
-def sigmoid(z: float) -> float:
-	#Your code here
-    result = 1 / (1 + math.exp(-z))
-    result = round(result, 4) #the output to be rounded to 4 decimal places
+def act_sigmoid(z):
+    result = 1 / (1 + np.exp(-z))
     return result
 
-def softmax(scores: list[float]) -> list[float]:
-    result = []
-    temp = [math.exp(i) for i in scores]
-    sum_temp = sum(temp)
-    result = [round((j/sum_temp),4) for j in temp]
-    return result
-
-def wtd_sum(features: list[list[float]], weights: list[float], bias: float) -> (list[float]):
-
-    temp_sum = features*weights
-    wtd_sum_result = temp_sum + bias # broadcast
-
+def wtd_sum(features, weights, bias):
+    x_dot_w = np.dot(features, weights)
+    wtd_sum_result = x_dot_w + bias # broadcast
     return wtd_sum_result
 
-def single_neuron_model(features: list[list[float]], labels: list[int], weights: list[float], bias: float) -> (list[float], float):
+def mse_custom(y_actual, y_pred):
+    # Calculate Mean Squared Error
+    mse_result = np.mean((y_actual - y_pred)**2)
+    return mse_result
+
+def single_neuron_model(features, labels, weights, bias):
 	# Your code here
-    y_actual = labels
-    y_hat = wtd_sum(features, weights, bias)
-    y_pred = sigmoid(y_hat)
-    mse = round(math.mse(y_actual, y_pred), 4)
-    probabilities = round(y_hat, 4)
-	
-    return probabilities, mse
+    y_actual = np.array(labels)
+    y_hat = wtd_sum(features, weights, bias) # this is an array 
+    y_pred = act_sigmoid(y_hat)
+    mse_val = mse_custom(y_actual, y_pred)
+    
+    prob_rounded = np.round(y_pred, 4)
+    mse_rounded = np.round(mse_val, 4)
+    return prob_rounded, mse_rounded
+
+if __name__ == "__main__":
+    # Test cases
+    probabilities, mse = single_neuron_model([[0.5, 1.0], [-1.5, -2.0], [2.0, 1.5]], [0, 1, 0], [0.7, -0.4], -0.1)
+    #expected output : ([0.4626, 0.4134, 0.6682], 0.3349)
+    #my output : Predicted Probabilities: [0.4626 0.4134 0.6682] Mean Squared Error: 0.3349
+    print("Predicted Probabilities:", probabilities)  # Expected output: probabilities rounded to 4 decimal places
+    print("Mean Squared Error:", mse)  # Expected output: MSE rounded to 4 decimal places
