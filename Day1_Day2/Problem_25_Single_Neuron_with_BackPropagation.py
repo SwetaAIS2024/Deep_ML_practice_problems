@@ -44,8 +44,9 @@ def grad_bias(error, y_pred, features):
 	return g_bias
 
 def me_custom(y_actual, y_pred):
-	me_custom_value = (y_actual - y_pred)
-	return me_custom_value
+    # me_custom_value = (y_actual - y_pred)
+    me_custom_value = (y_pred - y_actual)
+    return me_custom_value
 
 def train_neuron(features, labels, initial_weights, initial_bias, learning_rate, epochs):
 	# Your code here
@@ -82,12 +83,15 @@ def train_neuron(features, labels, initial_weights, initial_bias, learning_rate,
 
 if __name__ == "__main__":
     # Test cases
-    updated_weights, updated_bias, mse_values = train_neuron(
-        features=[[0.5, 1.0], [-1.5, -2.0], [2.0, 1.5]],
-        labels=[0, 1, 0],
-        initial_weights=[0.7, -0.4],
-        initial_bias=-0.1,
-        learning_rate=0.01,
-        epochs=10
-    )
+    # updated_weights, updated_bias, mse_values = train_neuron(
+    #     features=[[0.5, 1.0], [-1.5, -2.0], [2.0, 1.5]],
+    #     labels=[0, 1, 0],
+    #     initial_weights=[0.7, -0.4],
+    #     initial_bias=-0.1,
+    #     learning_rate=0.01,
+    #     epochs=10
+    # )
+
+    print(train_neuron(np.array([[1.0, 2.0], [2.0, 1.0], [-1.0, -2.0]]), np.array([1, 0, 0]), np.array([0.1, -0.2]), 0.0, 0.1, 2))
+    # Expected output:([0.1036, -0.1425], -0.0167, [0.3033, 0.2942])
     
